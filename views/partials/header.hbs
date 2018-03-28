@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{{ title }}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <header>
+            <div class="logo">
+                <a href="/" onclick="return false;"><img src="img/logo.svg" alt="Cipher logo"></a>
+            </div>
+            <nav class="header-nav">
+                <ul>
+                    {{#if isAuthenticated}}
+                    <li class="header-nav-item">
+                        <a href="/logout">Logout</a>
+                    </li>
+                    {{else}}
+                    <li class="header-nav-item">
+                        <a class="cta-primary" href="/register">Register</a>
+                    </li>
+                    <li class="header-nav-item">
+                        <a class="cta-secondary" href="/login">Login</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </div>
+    </header>
+
+</body>
+</html>

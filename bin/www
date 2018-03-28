@@ -8,6 +8,18 @@ var app = require('../app');
 var debug = require('debug')('helloexpress:server');
 var http = require('http');
 
+
+//=========REMOVE BEFORE DEPLOYMENT===========================
+var browserSync = require('browser-sync');
+var bs = browserSync.create().init({ logSnippet: false, proxy: "localhost:8000", files: ["public/css/*.css", "views/*.hbs"] });
+app.use(require('connect-browser-sync')(bs));
+
+
+//============================================================
+
+
+
+
 /**
  * Get port from environment and store in Express.
  */

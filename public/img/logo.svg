@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="27px" viewBox="0 0 28 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="11.7797258" y="-3.67973364" width="2.10810811" height="30.2162162" rx="1.05405405"></rect>
+    </defs>
+    <g id="Index---Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-51.000000, -20.000000)">
+        <g id="Group-5">
+            <g id="logo" transform="translate(52.000000, 22.000000)">
+                <path d="M0.214353721,11.5945946 C1.3258687,6.19758899 6.62747179,2.10810811 13,2.10810811 C19.3725282,2.10810811 24.6741313,6.19758899 25.7856463,11.5945946 C24.6741313,16.9916002 19.3725282,21.0810811 13,21.0810811 C6.62747179,21.0810811 1.3258687,16.9916002 0.214353721,11.5945946 Z" id="outline" stroke="#202724" stroke-width="2"></path>
+                <circle id="pupil" stroke="#202724" stroke-width="2" cx="12.8524325" cy="11.4470271" r="5.42000008"></circle>
+                <g id="stroke" transform="translate(12.833780, 11.428374) rotate(-45.000000) translate(-12.833780, -11.428374) ">
+                    <use fill="#202724" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <rect stroke="#FFFFFF" stroke-width="2" x="10.7797258" y="-4.67973364" width="4.10810811" height="32.2162162" rx="2.05405405"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
