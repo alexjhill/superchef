@@ -10,9 +10,11 @@ var http = require('http');
 
 
 //=========REMOVE BEFORE DEPLOYMENT===========================
-var browserSync = require('browser-sync');
-var bs = browserSync.create().init({ logSnippet: false, proxy: "localhost:8000", files: ["public/css/*.css", "views/*.hbs"] });
-app.use(require('connect-browser-sync')(bs));
+
+
+// var browserSync = require('browser-sync');
+// var bs = browserSync.create().init({ logSnippet: false, proxy: "localhost:8000", files: ["public/css/*.css", "views/*.hbs"] });
+// app.use(require('connect-browser-sync')(bs));
 
 
 //============================================================

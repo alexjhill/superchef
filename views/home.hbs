@@ -1,5 +1,17 @@
+<div class="container">
+    {{> header }}
 
-{{> header }}
 
+    <h1>Home</h1>
 
-<h1>Home</h1>
+    {{# each articles }}
+
+    <article class="">
+        <a href="/" class="item">
+            <h2><a href="/">{{ this.title }}</a></h2>
+            <p><a href="/">{{ this.author }}</a></p>
+            <p>Published: {{ this.published }}</p>
+        </a>
+    </article>
+    {{/each}}
+</div>

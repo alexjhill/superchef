@@ -1,7 +1,16 @@
-{{> header}}
 
 <div class="container">
-    <h2>Login</h2>
+
+    {{> header}}
+    <h2>{{ Title }}</h2>
+
+    {{#if showErrors}}
+    {{#each errors}}
+    <div class="alert alert-danger">
+        {{.}}
+    </div>
+    {{/each}}
+    {{/if}}
 
     <form action="/login" method="post">
 
@@ -19,4 +28,5 @@
 
 
     </form>
+
 </div>

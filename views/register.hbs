@@ -1,14 +1,17 @@
-{{> header}}
+
 
 <div class="container">
+
+    {{> header}}
+
     <h1>{{ title }}</h1>
 
-    {{#if errors}}
-        {{#each errors}}
-            <div class="alert alert-danger">
-                {{this.msg}}
-            </div>
-        {{/each}}
+    {{#if showErrors}}
+    {{#each errors}}
+    <div class="alert alert-danger">
+        {{.}}
+    </div>
+    {{/each}}
     {{/if}}
 
     <form action="/register" method="post">

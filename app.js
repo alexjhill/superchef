@@ -6,6 +6,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var flash = require('express-flash-messages');
+
 
 
 
@@ -27,8 +29,8 @@ db.on ('error', function(err){
 });
 
 
-
 var indexRouter = require('./routes/index');
+
 
 
 // AUTHENTICATION SETUP
@@ -53,7 +55,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash())
 
+
+// Session validation
 app.use(session({
     secret: 'agsdhsdfqeqefvsdvsdv',
     resave: false,
@@ -64,21 +69,18 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(function(req, res, next) {
     res.locals.isAuthenticated = req.isAuthenticated();
     next();
 });
-
 app.use('/', indexRouter);
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
-
-        User.findOne({ username: username }, function (err, user) {
-            if (err) { return done(err); }
+        User.findOne({ username: username }, function (error, user) {
+            if (error) { return done(error); }
             if (!user) {
-                return done(null, false);
+                return done(null, false, {message: 'Username does not exist.'});
             } else {
                 const hash = user.password;
 
@@ -86,22 +88,20 @@ passport.use(new LocalStrategy(
                     if (response === true) {
                         return done(null, {user_id: user._id});
                     } else {
-                        return done(null, false);
+                        return done(null, false, {message: 'Incorrect password.'});
                     }
                 });
             }
-
-
         })
     }
 ));
-
-
 app.use(function(req, res, next) {
     res.locals.login = req.isAuthenticated();
     res.locals.session = req.session;
     next();
 });
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
