@@ -1,5 +1,6 @@
 // browser-sync start --proxy "localhost:8000" --files "views/partials/*.hbs, views/*.hbs, public/css/*.css"
 
+var createError = require('http-errors')
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -30,6 +31,8 @@ db.on ('error', function(err){
 
 
 var indexRouter = require('./routes/index');
+var userRouter = require('./routes/user');
+var articleRouter = require('./routes/article');
 
 
 
@@ -73,6 +76,9 @@ app.use(function(req, res, next) {
     res.locals.isAuthenticated = req.isAuthenticated();
     next();
 });
+
+app.use('/user', userRouter);
+app.use('/article', articleRouter);
 app.use('/', indexRouter);
 
 passport.use(new LocalStrategy(
@@ -103,20 +109,23 @@ app.use(function(req, res, next) {
 
 
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    next(createError(404));
-});
+app.use(function(req, res, next){
+  res.status(404);
 
-// error handler
-app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // respond with html page
+  if (req.accepts('html')) {
+    res.render('404', { url: req.url });
+    return;
+  }
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+  // respond with json
+  if (req.accepts('json')) {
+    res.send({ error: 'Not found' });
+    return;
+  }
+
+  // default to plain-text. send()
+  res.type('txt').send('Not found');
 });
 
 

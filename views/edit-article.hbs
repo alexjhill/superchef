@@ -1,6 +1,6 @@
+
 {{> header }}
 <div class="container">
-
 
     <h1>{{ title }}</h1>
 
@@ -12,17 +12,17 @@
     {{/each}}
     {{/if}}
 
-    <form action="/article/create-article" method="post">
+    <form action="/article/{{ article._id }}/edit" method="post">
 
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" name="title" placeholder="Article title">
+            <input type="text" class="form-control" name="title" placeholder="Article title" value="{{ article.title }}">
         </div>
 
 
         <div class="form-group">
             <label for="body">Article body</label>
-            <input type="text" class="form-control" name="body" placeholder="Your text here">
+            <input type="text" class="form-control" name="body" placeholder="Your text here" value="{{ article.body }}">
         </div>
         <button type="submit" class="btn btn-primary">Publish</button>
 

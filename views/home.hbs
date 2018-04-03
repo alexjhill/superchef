@@ -1,15 +1,15 @@
+
+{{> header }}
+
 <div class="container">
-    {{> header }}
-
-
     <h1>Home</h1>
 
     {{# each articles }}
 
     <article class="">
         <a href="/" class="item">
-            <h2><a href="/">{{ this.title }}</a></h2>
-            <p><a href="/">{{ this.author }}</a></p>
+            <h2><a href="/article/{{ this._id }}">{{ this.title }}</a></h2>
+            <p><a href="/user/{{ this.author }}">{{ this.author }}</a></p>
             <p>Published: {{ this.published }}</p>
         </a>
     </article>
