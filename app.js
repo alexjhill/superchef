@@ -11,7 +11,6 @@ var flash = require('express-flash-messages');
 
 
 
-
 // MONGODB SETUP
 var mongoose = require('mongoose');
 var User = require('./models/user');
@@ -32,7 +31,7 @@ db.on ('error', function(err){
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
-var articleRouter = require('./routes/article');
+var recipeRouter = require('./routes/recipe');
 
 
 
@@ -53,6 +52,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
@@ -78,7 +78,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/user', userRouter);
-app.use('/article', articleRouter);
+app.use('/recipe', recipeRouter);
 app.use('/', indexRouter);
 
 passport.use(new LocalStrategy(
@@ -135,7 +135,6 @@ const fs = require('fs');
 
 
 
-
 const partialsDir = __dirname + '/views/partials';
 const partialsFiles = fs.readdirSync(partialsDir);
 
@@ -153,6 +152,7 @@ hbs.registerHelper('json', function(context) {
     return JSON.stringify(context, null, 2);
 });
 
+hbs.registerHelper('dateFormat', require('handlebars-dateformat'));
 
 
 const modelsDir = __dirname + '/models';

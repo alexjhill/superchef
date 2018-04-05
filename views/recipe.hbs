@@ -1,0 +1,39 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/recipe.css">
+</head>
+
+{{> header}}
+
+<div class="container">
+
+    <a href="/recipe/{{ recipe._id }}/delete">Delete</a>
+    <br>
+    <a href="/recipe/{{ recipe._id }}/edit">Edit</a>
+
+    <div class="header-img" data="https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/recipe-image-legacy-id--488691_11.jpg?itok=ExaTspz1"></div>
+
+
+    <section class="recipe">
+        <div class="column recipe-body">
+            <h1>{{ recipe.title }}</h1>
+            <p>{{ recipe.body }}</p>
+        </div>
+        <div class="column recipe-info">
+            <ul>
+                <li class="likes"></li>
+                <li>{{ dateFormat recipe.published "Do MMMM YYYY" }}</li>
+                <li>{{ recipe.cookingTime }}</li>
+                <li>{{ recipe.difficulty }}</li>
+                <li>{{ recipe.feeds }}</li>
+                <li><ul class="social">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul></li>
+            </ul>
+        </div>
+    </section>
+
+
+</div>

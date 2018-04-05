@@ -1,11 +1,314 @@
-.container {
-    width: 100%;
-    padding: 0 10%;
-    background: blue;
+* {
+    font-family: 'Lato', 'Helvetica', 'Arial', sans-serif;
+    box-sizing: border-box;
 }
 
-header {
-    height: 64px;
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    color: #141C28;
+} h1 {
+    font-size: 40px;
+    margin: 40px 0;
+    font-weight: 600;
+}
+
+p {
+    font-size: 18px;
+    max-width: 500px;
+    line-height: 1.5;
+    color: #141C28;
+}
+
+a {
+    text-decoration: none;
+    color: #141C28;
+} a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    position: relative;
+    display: inline-block;
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    min-width: 40px;
+    height: 37px;
+    line-height: 37px;
+    text-align: center;
+    font-size: 16px;
+    margin: 0 5px;
+    padding: 0 16px;
+    z-index: 1;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    margin: 0;
+    padding: 0 16px;
+    color: #fff;
+} .btn-primary::before {
+    content: "";
+    position: absolute;
+    bottom: -10%;
+    left: 0;
     width: 100%;
+    height: 110%;
+    background: #141C28;
+    z-index: -1;
+    transition: 0.3s;
+} .btn-primary:hover {
+    text-decoration: none;
+    color: #141C28;
+    transition: 0.3s;
+} .btn-primary:hover::before {
+    height: 7px;
+    transition: 0.3s;
+}
+
+.btn-icon {
+    position: relative;
+    border-radius: 50%;
+    background: none;
+    border: 2px solid #141C28;
+    outline: none;
+    line-height: 100%;
+    padding: 4px;
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #141C28;
+    transition: .3;
+} .btn-icon img {
+    width: 20px;
+} .btn-icon::before {
+    display: none;
+    content: attr(label);
+    white-space: nowrap;
+    color: #fff;
+    font-size: 12px;
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #141C28;
+    padding: 1px 10px;
+    border-radius: 3px;
+    z-index: 1;
+} .btn-icon::after {
+    display: none;
+    content: "";
+    position: absolute;
+    right: 47px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    height: 10px;
+    background: #141C28;
+    width: 10px;
+    border-radius: 3px;
+} .btn-icon:hover::before, .btn-icon:hover::after {
+    display: block;
+} .btn-icon:hover {
+    background: rgba(0,0,0,0.05);
+    transition: .3;
+}
+
+
+.alert {
     background: #FF7979;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 3px;
+    color: #fff;
+}
+
+
+
+
+
+section {
+    position: relative;
+    width: 100%;
+    margin: 0;
+}
+
+
+
+
+
+
+/*=================================================
+HEADER
+=================================================*/
+
+header {
+    position: fixed;
+    top: 0;
+    display: flex;
+    height: 54px;
+    width: 100%;
+    background: #fff;
+    z-index: 10;
+    transition: .3;
+} header.scrolled {
+    /* box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.14); */
+    transition: .3;
+} header .column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    height: 100%;
+    float: left;
+} header .column input {
+    background: rgba(219, 224, 231,0);
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    width: 100%;
+    color: #141C28;
+    transition: 0.2;
+} header .column input::placeholder {
+    color: rgba(20, 28, 40, 0.3);
+} header .column input:hover {
+    background: rgba(219, 224, 231,.3);
+    transition: 0.2;
+} header .column input:focus {
+    background: rgba(219, 224, 231,.5);
+    transition: 0.2;
+} header .column input:focus::placeholder {
+
+    transition: 0.2;
+} #dropDownBtn {
+    position: relative;
+    background: none;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    cursor: pointer;
+} header #dropDownMenu {
+    position: absolute;
+    background: #fff;
+    top: 100%;
+    padding: 5px 0;
+    margin: 0;
+    list-style-type: none;
+    border-radius: 3px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.14);
+    display: none;
+    z-index: 1;
+} header #dropDownMenu::before {
+    content: "";
+    position: absolute;
+    background: #fff;
+    top: -8px;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateX(-50%) rotate(45deg);
+    z-index: -1;
+} header #dropDownMenu li a {
+    position: relative;
+    display: block;
+    padding: 10px 25px 10px 45px;
+    z-index: 1;
+    opacity: 0.7;
+} header #dropDownMenu li a img {
+    position: absolute;
+    left: 14px;
+    top: 8px;
+    width: 22px;
+    opacity: 0.9;
+} header #dropDownMenu li a:hover {
+    text-decoration: none;
+    background: #efefef;
+} #dropDownMenu.show {
+    display: block;
+}
+
+
+
+/*=================================================
+RECIPES
+=================================================*/
+
+section.recipes {
+    padding-top: 80px;
+    display: flex;
+    background: #DBE0E7;
+    z-index: 5;
+}
+
+.recipe-thumbnail-large {
+    max-width: 300px;
+    margin: 10px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 1px 2px 10px rgba(0,0,0,0.14);
+} .recipe-thumbnail-large img {
+    width: 100%;
+    height: 200px;
+    border-radius: 5px 5px 0 0 ;
+    object-fit: cover;
+} .recipe-thumbnail-large .caption {
+    padding: 5px 20px 10px 20px;
+} .recipe-thumbnail-large .caption ul {
+    list-style-type: none;
+    margin: 10px 0;
+    padding: 0;
+} .recipe-thumbnail-large .caption ul li {
+    display: inline-block;
+    margin: 0 5px 5px 0;
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid #FF7979;
+    color: #FF7979;
+    background: rgba(255,121,121, 0.2);
+} .recipe-thumbnail-large .caption ul li img {
+    display: inline-block;
+    float: left;
+    margin: 0 5px 0 0;
+    height: 15px;
+    width: 15px;
+} .recipe-thumbnail-large .caption h4 {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1;
+    margin: 0 0 20px 0;
+} .recipe-thumbnail-large .caption p {
+    font-size: 14px;
+    line-height: 1;
+    margin: 10px 0;
+}
+
+
+
+
+
+
+/*=================================================
+SIGN UP BANNER
+=================================================*/
+
+section.sign-up-banner {
+    padding: 50px 0 100px 0;
+    background: #fff;
+} section.sign-up-banner div {
+    width: 500px;
+    margin: 0 auto
 }
