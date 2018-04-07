@@ -14,6 +14,7 @@ var flash = require('express-flash-messages');
 // MONGODB SETUP
 var mongoose = require('mongoose');
 var User = require('./models/user');
+var Recipe = require('./models/recipe');
 
 mongoose.connect('mongodb://alexjhill:password@ds121118.mlab.com:21118/linear');
 var db = mongoose.connection;
@@ -110,22 +111,25 @@ app.use(function(req, res, next) {
 
 
 app.use(function(req, res, next){
-  res.status(404);
+    res.status(404);
 
-  // respond with html page
-  if (req.accepts('html')) {
-    res.render('404', { url: req.url });
-    return;
-  }
+    // respond with html page
+    if (req.accepts('html')) {
+        Recipe.find( function(error, docs) {
+            if (error) throw error;
+            res.render('404', { title: '404 Page not found :(', url: req.url, recipes: docs });
+        });
+        return;
+    }
 
-  // respond with json
-  if (req.accepts('json')) {
-    res.send({ error: 'Not found' });
-    return;
-  }
+    // respond with json
+    if (req.accepts('json')) {
+        res.send({ error: 'Not found' });
+        return;
+    }
 
-  // default to plain-text. send()
-  res.type('txt').send('Not found');
+    // default to plain-text. send()
+    res.type('txt').send('Not found');
 });
 
 
@@ -153,6 +157,20 @@ hbs.registerHelper('json', function(context) {
 });
 
 hbs.registerHelper('dateFormat', require('handlebars-dateformat'));
+
+hbs.registerHelper('ifEqual', function(a, b, opts) {
+    if (a == b) {
+        return opts.fn(this)
+    } else {
+        return opts.inverse(this)
+    }
+})
+
+hbs.registerHelper('checked', function(value, test) {
+    if (value == undefined) return '';
+    return value==test ? 'checked' : '';
+});
+
 
 
 const modelsDir = __dirname + '/models';

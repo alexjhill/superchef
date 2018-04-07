@@ -7,28 +7,28 @@ var path = require('path');
 
 // Multer storage engine
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './uploads/');
-  },
-  filename: function(req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname);
-  }
+    destination: function(req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, new Date().toISOString() + file.originalname);
+    }
 });
 
 const fileFilter = (req, file, cb) => {
-  // reject a file
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
-    cb(null, true);
-  } else {
-  }
+    // reject a file
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
+        cb(null, true);
+    } else {
+    }
 };
 
 const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  fileFilter: fileFilter
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
 });
 
 
@@ -55,7 +55,8 @@ router.post('/create-recipe', upload.single('image'), function(req, res) {
     req.checkBody('title', '# Recipe title must be between 4-100 characters long.').len(4, 100);
     req.checkBody('description', '# Recipe must have a description.').notEmpty();
     req.checkBody('step1', '# Recipe must have at least one step.').notEmpty();
-    req.checkBody('recipeTime', '# Recipe must have a time.').notEmpty();
+    req.checkBody('recipeTimeHrs', '# Recipe must have a time.').notEmpty();
+    req.checkBody('recipeTimeMins', '# Recipe must have a time.').notEmpty();
     req.checkBody('difficulty', '# Recipe must have a difficulty.').notEmpty();
     req.checkBody('serves', '# Recipe must include how many people it serves.').notEmpty();
 
@@ -75,15 +76,16 @@ router.post('/create-recipe', upload.single('image'), function(req, res) {
             var recipeSteps = req.body.step1;
             var recipeAuthor = doc.username;
             var recipePublished = Date.now();
-            var recipeTime = req.body.recipeTime + " mins";
+            var recipeTimeHrs = req.body.recipeTimeHrs;
+            var recipeTimeMins = req.body.recipeTimeMins;
             var recipeDifficulty = req.body.difficulty;
             var recipeServes = req.body.serves;
 
-            if (recipeServes == 1) {
-                recipeServes = recipeServes.toString() + " person";
-            } else {
-                recipeServes = recipeServes.toString() + " people";
-            }
+            // if (recipeServes == 1) {
+            //     recipeServes = recipeServes.toString() + " person";
+            // } else {
+            //     recipeServes = recipeServes.toString() + " people";
+            // }
 
             var recipeImage = req.file.path;
 
@@ -95,7 +97,8 @@ router.post('/create-recipe', upload.single('image'), function(req, res) {
                 steps: recipeSteps,
                 author: recipeAuthor,
                 published: recipePublished,
-                recipeTime: recipeTime,
+                recipeTimeHrs: recipeTimeHrs,
+                recipeTimeMins: recipeTimeMins,
                 difficulty: recipeDifficulty,
                 serves: recipeServes,
                 image: recipeImage
@@ -117,11 +120,19 @@ router.get('/:recipeid', function(req, res) {
 
     Recipe.findById(recipeId, function(error, doc) {
         if (error) throw error;
-        res.render('recipe', { title: doc.title, recipe: doc });
+
+        if (req.user) {
+            User.findById(req.user.user_id, function(error, user) {
+                if (error) throw error;
+                res.render('recipe', { title: doc.title, recipe: doc, user: user });
+            });
+        } else {
+            res.render('recipe', { title: doc.title, recipe: doc });
+        }
     });
 });
 
-router.get('/:recipeid/delete', function(req, res) {
+router.get('/:recipeid/delete', isLoggedIn(), function(req, res) {
 
     var recipeId = req.params.recipeid;
 
@@ -132,42 +143,64 @@ router.get('/:recipeid/delete', function(req, res) {
     });
 });
 
-router.get('/:recipeid/edit', function(req, res) {
+router.get('/:recipeid/edit', isLoggedIn(), function(req, res) {
     var recipeId = req.params.recipeid;
 
     Recipe.findById(recipeId, function(error, doc) {
         if (error) throw error;
-        console.log(doc);
-        res.render('edit-recipe', { title: 'Edit Recipe', recipe: doc });
+        User.findById(req.user.user_id, function(error, user) {
+            if (error) throw error;
+            res.render('edit-recipe', { title: 'Edit Recipe', recipe: doc, user: user });
+        });
     });
-
 });
 
-router.post('/:recipeid/edit', function(req, res) {
+router.post('/:recipeid/edit', upload.single('image'), function(req, res) {
 
     var recipeId = req.params.recipeid;
 
-    req.checkBody('title', 'Recipe must have a title.').notEmpty();
-    req.checkBody('title', 'Recipe title must be between 4-100 characters long.').len(4, 100);
-
-    req.checkBody('body', 'Recipe must have some content.').notEmpty();
+    req.checkBody('title', '# Recipe must have a title.').notEmpty();
+    req.checkBody('title', '# Recipe title must be between 4-100 characters long.').len(4, 100);
+    req.checkBody('description', '# Recipe must have a description.').notEmpty();
+    req.checkBody('step1', '# Recipe must have at least one step.').notEmpty();
+    req.checkBody('recipeTimeHrs', '# Recipe must have a time.').notEmpty();
+    req.checkBody('recipeTimeMins', '# Recipe must have a time.').notEmpty();
+    req.checkBody('difficulty', '# Recipe must have a difficulty.').notEmpty();
+    req.checkBody('serves', '# Recipe must include how many people it serves.').notEmpty();
 
     const errors = req.validationErrors();
 
     if (errors) {
-
-        res.render('edit-recipe', {
-            title: 'Recipe Error',
-            errors: errors
+        console.log(errors);
+        Recipe.findById(recipeId, function(error, doc){
+            User.findById(req.user.user_id, function(error, user){
+                res.render('edit-recipe', { title: 'Edit recipe', errors: errors, user: user, recipe: doc });
+            });
         });
+
     } else {
 
-        recipe.findById(recipeId, function(error, oldDoc) {
+        Recipe.findById(recipeId, function(error, oldDoc) {
             if (error) throw error;
 
             oldDoc.title = req.body.title;
-            oldDoc.body = req.body.body;
+            oldDoc.description = req.body.description;
+            oldDoc.steps = req.body.step1;
             oldDoc.published = Date.now();
+            oldDoc.recipeTimeHrs = req.body.recipeTimeHrs;
+            oldDoc.recipeTimeMins = req.body.recipeTimeMins;
+            oldDoc.difficulty = req.body.difficulty;
+            oldDoc.serves = req.body.serves;
+
+            // if (recipeServes == 1) {
+            //     recipeServes = recipeServes.toString() + " person";
+            // } else {
+            //     recipeServes = recipeServes.toString() + " people";
+            // }
+
+            if (req.file) {
+                oldDoc.image = req.file.path;
+            }
 
             oldDoc.save(function(error, updatedDoc) {
                 if (error) throw error;

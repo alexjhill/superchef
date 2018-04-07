@@ -6,10 +6,7 @@
 
 {{> header }}
 <div class="header-img">
-    <img id="header-img" src="/img/placeholder.png">
-    <button label="Change image" class="btn-icon" onClick="document.getElementById('selectedFile').click();">
-        <img src="/img/edit.svg">
-    </button>
+    <img id="header-img" style="cursor: pointer" src="/img/placeholder.png" onClick="document.getElementById('selectedFile').click();">
 </div>
 
 <div class="wrapper">
@@ -53,27 +50,27 @@
                     </div>
 
 
-                    <div>
+                    <div class="info-section">
                         <label for="recipeTimeHrs">Recipe time:</label>
                         <br>
                         <input class="recipe-text number" name="recipeTimeHrs" type="number" value="0" min="0" max="60" onfocusout="this.value = minmax(this.value, 0, 6); caesarEncypher();" onfocus="this.select();"> hrs &nbsp; &nbsp;
                         <input class="recipe-text number" name="recipeTimeMins" type="number" value="0" min="0" max="60" onfocusout="this.value = minmax(this.value, 0, 59); caesarEncypher();" onfocus="this.select();"> mins
                     </div>
-                    <div class="difficulty">
+                    <div class="info-section">
                         <label for="difficulty">Difficulty:</label>
                         <br>
                         <ul>
                             <li><input type="radio" name="difficulty" value="Easy"> Easy</li>
-                            <li><input type="radio" name="difficulty" value="More effort"> More effort</li>
-                            <li><input type="radio" name="difficulty" value="A challenge"> A challenge</li>
+                            <li><input type="radio" name="difficulty" value="Medium"> Medium</li>
+                            <li><input type="radio" name="difficulty" value="Hard"> Hard</li>
                         </ul>
                     </div>
-                    <div>
+                    <div class="info-section">
                         <label for="serves">Serves:</label>
                         <br>
-                        <input class="recipe-text number" name="serves" type="number" placeholder="2" min="0" max="15" onfocusout="this.value = minmax(this.value, 0, 15); caesarEncypher();" onfocus="this.select();">
+                        <input class="recipe-text number" name="serves" type="number" value="1" min="1" max="15" onfocusout="this.value = minmax(this.value, 1, 15); caesarEncypher();" onfocus="this.select();">
                     </div>
-                    <div style="display:none">
+                    <div class="info-section" style="display:none">
                         <label for="image">Image:</label>
                         <br>
                         <input type="file" name="image" id="selectedFile" onchange="readURL(this);"/>

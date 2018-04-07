@@ -2,17 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 var User = require('../models/user');
+var Recipe = require('../models/recipe');
 
 var expressValidator = require('express-validator');
 var passport = require('passport');
 var bcrypt = require('bcrypt');
 
 const saltRounds = 10;
-
-// Profile
-router.get('/profile', isLoggedIn(), function(req, res) {
-    res.render('profile', { title: 'Profile' });
-});
 
 
 
@@ -46,7 +42,8 @@ router.get('/login', notLoggedIn(), function(req, res) {
 
 
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/user/profile',
+
+    successRedirect: '/',
     failureRedirect: '/user/login',
     badRequestMessage: 'Please enter a username and password.',
     failureFlash: true
@@ -132,17 +129,16 @@ router.post('/register', function(req, res, next) {
     })
 });
 
-
-router.get('/:userid', function(req, res) {
-    var userId = req.params.userid;
-
-    User.findById(userId, function(error, doc) {
-        if (error) throw error;
-        res.render('profile', { title: doc.username, user: doc });
+// Profile
+router.get('/:username', function(req, res) {
+    var username = req.params.username;
+    User.findOne({username: username}, function(error, user) {
+        Recipe.find({ author: user.username }, function(error, docs) {
+            if (error) throw error;
+            res.render('profile', { title: 'Profile', recipes: docs, user: user });
+        });
     });
 });
-
-
 
 function isLoggedIn() {
     return (req, res, next) => {

@@ -1,30 +1,45 @@
 
 {{> header }}
 <section class="recipes">
+
+    <h1>Popular recipes</h1>
+
+
     {{# each recipes }}
 
-    <article class="recipe-thumbnail-large">
-        <a href="/recipe/{{ this._id }}"><img src="{{ this.image }}" alt=""></a>
+    <article class="recipe-thumbnail recipe-thumbnail-portrait">
+        <a href="/recipe/{{ this._id }}"><img class="recipe-img" src="{{ this.image }}" alt=""></a>
         <div class="caption">
-            <ul>
-                <li><img src="/img/time.svg">{{ this.recipeTime }}</li>
-                <li><img src="/img/difficulty.svg">{{ this.difficulty }}</li>
-                <li><img src="/img/people.svg">{{ this.serves }}</li>
-            </ul>
-            <h4><a href="/recipe/{{ this._id }}">{{ this.title }}</a></4>
-            <p><a href="/user/{{ this.author }}">{{ this.author }}</a></p>
-
+            <div>
+                <h4><a href="/recipe/{{ this._id }}">{{ this.title }}</a></h4>
+                <p><a href="/user/{{ this.author }}">{{ this.author }}</a></p>
+            </div>
+            <div>
+                <ul>
+                    <li><img src="/img/time.svg">{{ this.recipeTimeHrs }} hrs {{ this.recipeTimeMins }} mins</li>
+                    <li><img src="/img/difficulty.svg">{{ this.difficulty }}</li>
+                    <li><img src="/img/people.svg">{{ this.serves }} Serving</li>
+                </ul>
+                <button class="btn-icon" type="button" name="favourite"><img src="/img/favourite.svg"><br>{{ this.favourites }}</button>
+            </div>
         </div>
     </article>
     {{/each}}
 
 </section>
+
+{{#unless isAuthenticated }}
 <section class="sign-up-banner">
     <div>
+    </div>
+    <div class="text">
         <h1>Great recipes that’ll make you go “yum…”</h1>
         <p>Some persuasive text with membership benefits to convince someone to sign up.</p>
         <br>
         <a href="/user/register" class="btn btn-primary">Sign Up!</a>
         <a href="/learn-more" class="btn">Learn more</a>
     </div>
+    <div>
+    </div>
 </section>
+{{/unless}}

@@ -1,30 +1,32 @@
-<div class="container">
-    {{> header}}
-    <h1>404</h1>
-    <h1>The cupboards are bare :(</h1>
-    <p>We couldn’t find the page you were looking for but here are some other great recipes.</p>
+{{> header}}
 
-    <ul>
-        <li>
-            <article class="recipe-thumbnail-small">
-                <img src="img/" alt="">
-                <h3>Some other recipe with lots of other ingredients</h3>
-                <p>alexjhill  •  45 mins  •  Easy</p>
-            </article>
-        </li>
-        <li>
-            <article class="recipe-thumbnail-small">
-                <img src="img/" alt="">
-                <h3>Some other recipe with lots of other ingredients</h3>
-                <p>alexjhill  •  45 mins  •  Easy</p>
-            </article>
-        </li>
-        <li>
-            <article class="recipe-thumbnail-small">
-                <img src="img/" alt="">
-                <h3>Some other recipe with lots of other ingredients</h3>
-                <p>alexjhill  •  45 mins  •  Easy</p>
-            </article>
-        </li>
-    </ul>
+<div class="container" style="margin: 30px auto 30px auto;">
+    <h1 style="font-size: 200px; margin: 0;">404</h1>
+    <p style="font-size: 30px; margin: 10px 0; font-weight: 600;">The cupboards are bare :(</p>
+    <p>We couldn’t find the page you were looking for but here are some other great recipes.</p>
 </div>
+
+<section class="recipes">
+
+    <h1>Top recipes</h1>
+
+    {{# each recipes }}
+    <article class="recipe-thumbnail recipe-thumbnail-landscape">
+        <a href="/recipe/{{ this._id }}"><img class="recipe-img" src="{{ this.image }}" alt=""></a>
+        <div class="caption">
+            <div>
+                <h4><a href="/recipe/{{ this._id }}">{{ this.title }}</a></h4>
+                <p><a href="/user/{{ this.author }}">{{ this.author }}</a></p>
+            </div>
+            <div>
+                <ul>
+                    <li><img src="/img/time.svg">{{ this.recipeTimeHrs }} hrs {{ this.recipeTimeMins }} mins</li>
+                    <li><img src="/img/difficulty.svg">{{ this.difficulty }}</li>
+                    <li><img src="/img/people.svg">{{ this.serves }}</li>
+                </ul>
+                <button class="btn-icon" type="button" name="favourite"><img src="/img/favourite.svg"><br>{{ this.favourites }}</button>
+            </div>
+        </div>
+    </article>
+    {{/each}}
+</section>

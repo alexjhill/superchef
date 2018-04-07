@@ -2,38 +2,78 @@
     <link rel="stylesheet" type="text/css" href="/css/recipe.css">
 </head>
 
+<div id="modal-delete-confirm" class="modal-bg">
+
+    <div class="modal">
+        <button type="button" class="btn-icon" name="close-modal" onclick="document.getElementById('modal-delete-confirm').style.display='none'"><img src="/img/close.svg"></button>
+        <h1>Delete recipe?</h1>
+        <p>Are you sure you want to delete this recipe?</p>
+
+        <button onclick="document.getElementById('modal-delete-confirm').style.display='none'" class="btn">Cancel</button>
+
+        <a href="/recipe/{{ recipe._id }}/delete" class="btn btn-primary btn-danger">Delete recipe</a>
+    </form>
+</div>
+
+</div>
+
 {{> header}}
 
-<div class="container">
 
-    <a href="/recipe/{{ recipe._id }}/delete">Delete</a>
-    <br>
-    <a href="/recipe/{{ recipe._id }}/edit">Edit</a>
-
-    <div class="header-img" data="https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/recipe-image-legacy-id--488691_11.jpg?itok=ExaTspz1"></div>
+<div class="header-img">
+    <img id="header-img" src="/{{ recipe.image }}">
+</div>
 
 
-    <section class="recipe">
-        <div class="column recipe-body">
-            <h1>{{ recipe.title }}</h1>
-            <p>{{ recipe.body }}</p>
+<div class="wrapper">
+
+    <div class="recipe">
+        <div class="col-1">
+            <h1 class="recipe-text title">{{ recipe.title }}</h1>
+            <p class="recipe-text body">{{ recipe.description }}</p>
+            <ol>
+                {{#each recipe.steps }}
+                <li><p class="recipe-text body">{{ . }}</p></li>
+                {{/each}}
+            </ol>
+
+
         </div>
-        <div class="column recipe-info">
-            <ul>
-                <li class="likes"></li>
-                <li>{{ dateFormat recipe.published "Do MMMM YYYY" }}</li>
-                <li>{{ recipe.cookingTime }}</li>
-                <li>{{ recipe.difficulty }}</li>
-                <li>{{ recipe.feeds }}</li>
-                <li><ul class="social">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul></li>
-            </ul>
+        <div class="col-2">
+            <div class="recipe-info">
+
+                <div class="account-info">
+                    <img src="/img/profile.svg" alt="">
+                    <div>
+                        <p>Recipe Author</p>
+                        <p><a href="/user/{{ recipe.author }}">{{ recipe.author }}</a></p>
+                    </div>
+                </div>
+
+                {{#ifEqual recipe.author user.username }}
+                <div class="info-section">
+                    <a class="btn btn-primary" href="/recipe/{{ recipe._id }}/edit">Edit recipe</a>
+                    <button class="btn btn-danger" onclick="document.getElementById('modal-delete-confirm').style.display='block'">Delete recipe</button>
+                </div>
+                {{/ifEqual}}
+
+                <div class="info-section favourites">
+                    <button class="btn-icon" type="button" name="favourite"><img src="/img/favourite.svg"><br>{{ recipe.favourites }}</button>
+                </div>
+
+
+                <div class="info-section">
+                    <ul style="font-weight: 600">
+                        <li style="margin: 40px 0 30px 0; font-weight: 400">{{ dateFormat recipe.published "ddd, Do MMMM YYYY" }}</li>
+                        <li><img src="/img/time.svg">{{ recipe.recipeTimeHrs }} hrs {{ recipeTimeMins }} mins</li>
+                        <li><img src="/img/difficulty.svg">{{ recipe.difficulty }}</li>
+                        <li><img src="/img/people.svg">{{ recipe.serves }} Serving</li>
+                    </ul>
+                </div>
+
+            </div>
         </div>
-    </section>
+    </div>
 
 
 </div>

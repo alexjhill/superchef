@@ -29,42 +29,103 @@
             <button id="dropDownBtn" onclick="dropDown()"><img src="/img/profile.svg" alt=""></button>
             <ul id="dropDownMenu">
                 <li><a href="/recipe/create-recipe"><img src="/img/add.svg" alt="">Create recipe</a></li>
-                <li><a href="/user/profile"><img src="/img/profile.svg" alt="">Profile</a></li>
+                <li><a href="/user/{{ user.username }}"><img src="/img/profile.svg" alt="">Profile</a></li>
                 <li><a href="/user/logout"><img src="/img/logout.svg" alt="">Logout</a></li>
             </ul>
 
             {{else}}
-            <a class="btn" href="/user/login">Login</a>
-            <a class="btn btn-primary" href="/user/register">Sign Up!</a>
+            <button class="btn" onclick="document.getElementById('modal-login').style.display='block'">Login</button>
+            <button class="btn btn-primary" onclick="document.getElementById('modal-register').style.display='block'">Sign Up!</button>
             {{/if}}
         </nav>
     </header>
 
+    <div id="modal-login" class="modal-bg">
+
+        <div class="modal">
+            <button type="button" class="btn-icon" name="close-modal" onclick="document.getElementById('modal-login').style.display='none'"><img src="/img/close.svg"></button>
+            <h1>Sign in!</h1>
+            <p>Sign in to save recipes you love, follow your favourite *name*, create your own recipes and more…</p>
+
+            <form action="/user/login" method="post">
+
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="Enter username">
+                </div>
+
+
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+            </form>
+            <br>
+            <br>
+            No account? <a style="color: #FF7979" onclick="document.getElementById('modal-login').style.display='none'; document.getElementById('modal-register').style.display='block'">Create one</a>.
+        </div>
+
+    </div>
+
+    <div id="modal-register" class="modal-bg">
+
+
+        <div class="modal">
+            <button type="button" class="btn-icon" name="close-modal" onclick="document.getElementById('modal-register').style.display='none'"><img src="/img/close.svg"></button>
+            <h1>Join in!</h1>
+            <p>Create a profile to save recipes you love, follow your favourite *name*, create your own recipes and more…</p>
+
+            <form action="/user/register" method="post">
+
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Enter full name">
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Enter email">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="Enter username">
+                </div>
+
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <br>
+            <br>
+            Already have an account? <a style="color: #FF7979" onclick="document.getElementById('modal-login').style.display='block'; document.getElementById('modal-register').style.display='none'">Sign in</a>.
+        </div>
+    </div>
+
+
 
     <script type="text/javascript">
 
-        function dropDown() {
-            document.getElementById("dropDownMenu").classList.toggle("show");
+    function dropDown() {
+        document.getElementById("dropDownMenu").classList.toggle("show");
+    }
+
+    window.addEventListener('scroll', scrollFunctions);
+    // window.addEventListener("mousemove", followMouse);
+
+    function scrollFunctions() {
+        headerClassAdder();
+    }
+
+    // Changes header style on scroll
+    function headerClassAdder() {
+        var element = document.getElementById('header');
+        var scrollPos = window.scrollY;
+
+        if (scrollPos >= 1) {
+            element.classList.add('scrolled');
+        } else {
+            element.classList.remove('scrolled');
         }
-
-        window.addEventListener('scroll', scrollFunctions);
-        // window.addEventListener("mousemove", followMouse);
-
-        function scrollFunctions() {
-            headerClassAdder();
-        }
-
-        // Changes header style on scroll
-        function headerClassAdder() {
-            var element = document.getElementById('header');
-            var scrollPos = window.scrollY;
-
-            if (scrollPos >= 1) {
-                element.classList.add('scrolled');
-            } else {
-                element.classList.remove('scrolled');
-            }
-        }
-    </script>
+    }
+</script>
 </body>
 </html>

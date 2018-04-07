@@ -1,8 +1,31 @@
-<div class="container">
 
-    {{> header}}
+{{> header}}
 
 
-    <h1>{{ user.name }}</h1>
-    <h2>{{ user.username }}</h2>
-</div>
+<section class="recipes">
+
+    <h1>{{ user.username }}'s recipes</h1>
+
+
+    {{# each recipes }}
+
+    <article class="recipe-thumbnail recipe-thumbnail-portrait">
+        <a href="/recipe/{{ this._id }}"><img class="recipe-img" src="{{ this.image }}" alt=""></a>
+        <div class="caption">
+            <div>
+                <h4><a href="/recipe/{{ this._id }}">{{ this.title }}</a></h4>
+                <p><a href="/user/{{ this.author }}">{{ this.author }}</a></p>
+            </div>
+            <div>
+                <ul>
+                    <li><img src="/img/time.svg">{{ this.recipeTimeHrs }} hrs {{ this.recipeTimeMins }} mins</li>
+                    <li><img src="/img/difficulty.svg">{{ this.difficulty }}</li>
+                    <li><img src="/img/people.svg">{{ this.serves }}</li>
+                </ul>
+                <button class="btn-icon" type="button" name="favourite"><img src="/img/favourite.svg"><br>{{ this.favourites }}</button>
+            </div>
+        </div>
+    </article>
+    {{/each}}
+
+</section>

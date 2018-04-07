@@ -20,7 +20,8 @@
 }
 
 .wrapper {
-    max-width: 800px;
+    max-width: 900px;
+    padding: 0 20px;
     margin: 50px auto 300px auto;
 }
 
@@ -39,6 +40,33 @@
 
 .col-1 {
     width: 70%;
+} .col-1 h1 {
+    height: auto;
+    margin-bottom: 50px !important;
+} .col-1 p {
+    height: auto;
+    margin-bottom: 50px !important;
+} .col-1 ol {
+    list-style-type: none;
+} .col-1 li {
+    position: relative;
+    counter-increment: item;
+    margin-bottom: 5px;
+} .col-1 li:before {
+    content: counter(item);
+    position: absolute;
+    left: -40px;
+    top: -4px;
+    font-weight: 600;
+    font-size: 32px;
+} .col-1 li:after {
+    content: "";
+    position: absolute;
+    left: -12px;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: #141C28;
 } .recipe-text {
     background: none;
     outline: none;
@@ -85,16 +113,32 @@
 
 
 
-.recipe-info div {
-    margin: 20px 0;
+.recipe-info .info-section {
+    margin: 20px 0 0 0;
 } .recipe-info label {
     font-weight: 600;
-} .recipe-info .difficulty ul {
+    font-size: 20px;
+} .recipe-info .info-section ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
-} .recipe-info .difficulty li {
-    margin: 10px 0;
-} .recipe-info .difficulty li input {
+} .recipe-info .info-section li {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+} .recipe-info .info-section li img {
+    margin-right: 5px;
+} .recipe-info .info-section li input {
     margin: 0 10px 0 0;
+} .recipe-info .favourites {
+    margin-bottom: 50px;
+    text-align: center;
+} .recipe-info .favourites button {
+    border: none;
+    background: none;
+    color: #FF7979;
+    font-weight: 400;
+    font-size: 18px;
+} .recipe-info .favourites button img {
+    width: 40px;
 }

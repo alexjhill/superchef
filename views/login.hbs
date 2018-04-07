@@ -2,7 +2,10 @@
 {{> header}}
 
 <div class="container">
-    <h2>{{ Title }}</h2>
+
+    <h1>{{ title }}</h1>
+
+    <p>Sign in to save recipes you love, follow your favourite *name*, create your own recipes and more…</p>
 
     {{#if showErrors}}
     {{#each errors}}
@@ -15,18 +18,14 @@
     <form action="/user/login" method="post">
 
         <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" name="username" placeholder="Enter username">
+            <input type="text" name="username" placeholder="Enter username">
         </div>
 
 
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" placeholder="Password">
+            <input type="password" name="password" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
-
-
     </form>
 
 </div>
