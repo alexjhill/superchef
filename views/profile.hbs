@@ -10,7 +10,7 @@
     {{# each recipes }}
 
     <article class="recipe-thumbnail recipe-thumbnail-portrait">
-        <a href="/recipe/{{ this._id }}"><img class="recipe-img" src="{{ this.image }}" alt=""></a>
+        <a href="/recipe/{{ this._id }}"><img class="recipe-img" src="/uploads/{{ this.image }}" alt=""></a>
         <div class="caption">
             <div>
                 <h4><a href="/recipe/{{ this._id }}">{{ this.title }}</a></h4>

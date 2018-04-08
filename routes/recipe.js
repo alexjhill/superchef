@@ -136,10 +136,20 @@ router.get('/:recipeid/delete', isLoggedIn(), function(req, res) {
 
     var recipeId = req.params.recipeid;
 
-    Recipe.deleteOne({ _id: recipeId}, function(error) {
+    Recipe.findById(recipeId, function(error, doc) {
         if (error) throw error;
+        User.findById(req.user.user_id, function(error, user) {
+            if (error) throw error;
+            if (user.username == doc.author) {
+                Recipe.deleteOne({ _id: recipeId}, function(error) {
+                    if (error) throw error;
 
-        res.redirect('/');
+                    res.redirect('/');
+                });
+            } else {
+                res.redirect('/recipe/' + recipeId);
+            }
+        });
     });
 });
 
@@ -150,7 +160,11 @@ router.get('/:recipeid/edit', isLoggedIn(), function(req, res) {
         if (error) throw error;
         User.findById(req.user.user_id, function(error, user) {
             if (error) throw error;
-            res.render('edit-recipe', { title: 'Edit Recipe', recipe: doc, user: user });
+            if (user.username == doc.author) {
+                res.render('edit-recipe', { title: 'Edit Recipe', recipe: doc, user: user });
+            } else {
+                res.redirect('/recipe/' + recipeId);
+            }
         });
     });
 });
