@@ -14,7 +14,7 @@ var recipeSchema = new Schema({
     difficulty: {type: String, required: true},
     serves: {type: String, required: true},
     image: {type: String, required: true},
-    favourites: {type: Number, default: 0}
+    favouritesCounter: {type: Number, default: 0}
 },{ collection: 'recipes' });
 
 var Recipe = module.exports = mongoose.model('Recipe', recipeSchema);

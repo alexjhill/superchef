@@ -230,8 +230,6 @@ router.post('/:recipeid/edit', upload.single('image'), function(req, res) {
 
 
 
-
-
 function isLoggedIn() {
     return (req, res, next) => {
         console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
