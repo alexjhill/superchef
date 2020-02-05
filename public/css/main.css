@@ -211,6 +211,8 @@ header {
     flex-grow: 1;
     height: 100%;
     float: left;
+} header .column.logo img {
+    width: 100px;
 } header .column input {
     background: rgba(219, 224, 231,0);
     border: none;
