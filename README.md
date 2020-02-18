@@ -2,7 +2,7 @@
 
 Superchef is a website for sharing and discovering cooking recipes. It was developed for one of my modules in my second year of university and I wanted to focus on including recipe meta information such as the recipe time, recipe difficulty and the serving size. This project was my first experience with back-end development and I learned a lot about website structure, HTTP and, particularly, how typical user-generated content websites are built.
 
-The instructions to run this application are below but the application as it is won't work as the database has been taken offline.
+The instructions to run this application are below, however, the application will need access to a new MongoDB database as the old database has been taken offline.
 
 ![Superchef interface](public/img/superchef.gif)
 
