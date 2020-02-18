@@ -4,7 +4,7 @@ Superchef is a website for sharing and discovering cooking recipes. It was devel
 
 The instructions to run this application are below, however, the application will need access to a new MongoDB database as the old database has been taken offline.
 
-![Superchef interface](public/img/superchef.gif)
+![Superchef interface](superchef.gif)
 
 * NodeJS
 * ExpressJS
