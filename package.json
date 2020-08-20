@@ -7,7 +7,7 @@
         "stop": "pkill --signal SIGINT myApp"
     },
     "dependencies": {
-        "bcrypt": "^1.0.3",
+        "bcrypt": "^5.0.0",
         "body-parser": "^1.18.2",
         "browser-sync": "^2.23.6",
         "connect-browser-sync": "^2.1.0",
